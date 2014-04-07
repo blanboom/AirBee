@@ -1,0 +1,26 @@
+# Altium Designer #
+###################
+AirBee_Sensor_PCB/AirBee.PrjPcbStructure
+AirBee_Sensor_PCB/AirBee.SchDocPreview
+AirBee_Sensor_PCB/History
+AirBee_Sensor_PCB/MyLib.PcbLib.htm
+AirBee_Sensor_PCB/Project Logs for AirBee
+AirBee_Sensor_PCB/AirBee.PcbDocPreview
+
+AirBee_Network_PCB/AirBee.PrjPcbStructure
+AirBee_Network_PCB/AirBee.SchDocPreview
+AirBee_Network_PCB/History
+AirBee_Network_PCB/MyLib.PcbLib.htm
+AirBee_Network_PCB/Project Logs for AirBee
+AirBee_Network_PCB/AirBee.PcbDocPreview
+
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
