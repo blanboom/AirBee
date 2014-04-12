@@ -2,14 +2,14 @@
 lite version,1.0,use for arduino uno with EasySetupMode
 */
 
-#ifndef LeweiTcpClient_h
-#define LeweiTcpClient_h
+#ifndef LeweiTcpClientMod_h
+#define LeweiTcpClientMod_h
 
 #include <Ethernet.h>
 #include <EEPROM.h>
 
 /*
-LeweiTcpClient.h Library for tcp.lewei50.com to reverse control and upload data
+LeweiTcpClientMod.h Library for tcp.lewei50.com to reverse control and upload data
 Create by yangbo
 gyangbo@gmail.com
 2013.6.4
@@ -46,20 +46,18 @@ class UserFunction
 		const char *userFunctionName;
 	private:
 		UserFunction *next;
-		friend class LeweiTcpClient;
+		friend class LeweiTcpClientMod;
 };
 
 
-class LeweiTcpClient
+class LeweiTcpClientMod
 {
 	UserFunctionNode*head;
 	public:
 		char* tcpServer;
 		char * aliveString;
 		char * commandString;
-		LeweiTcpClient( const char *userKey,const char *gatewayNo);
-		//LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[]);
-		LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[],IPAddress ip,IPAddress dns,IPAddress gw,IPAddress subnet);
+		LeweiTcpClientMod( const char *userKey,const char *gatewayNo);
 		void keepOnline();
 		void appendSensorValue(String sensorName,String sensorValue);
 		void appendSensorValue(String sensorName,int sensorValue);

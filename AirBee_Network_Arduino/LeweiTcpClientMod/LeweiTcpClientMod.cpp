@@ -1,5 +1,5 @@
 
-#include <LeweiTcpClient.h>
+#include <LeweiTcpClientMod.h>
 
 UserFunction::UserFunction(void (*callfuct)(),const char *uFunctionName)
 {
@@ -72,7 +72,7 @@ UserFunction::UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const
 */
 
 
-LeweiTcpClient::LeweiTcpClient(const char *userKey,const char *gatewayNo):
+LeweiTcpClientMod::LeweiTcpClientMod(const char *userKey,const char *gatewayNo):
 	server(EthernetServer(80)),
 	tcpServer("tcp.lewei50.com")
 {
@@ -84,53 +84,16 @@ LeweiTcpClient::LeweiTcpClient(const char *userKey,const char *gatewayNo):
 	
 	setupDefaultValue();
 	
-	Ethernet.begin(_mac);
-	Serial.println(Ethernet.localIP());
-	//Ethernet.begin(mac, ip);
-	delay(1000);
-	String clientStr="";
-	keepOnline();
-}
-/*
-LeweiTcpClient::LeweiTcpClient(const char *userKey,const char *gatewayNo,byte mac[]):server(EthernetServer(80))
-{
-	_userKey = userKey;
-	_gatewayNo = gatewayNo;
-	setupDefaultValue();
-	
-	Ethernet.begin(mac);
-	Serial.println(Ethernet.localIP());
-	delay(1000);
-	
-	String clientStr="";
-	keepOnline();
-}
-*/
-
-LeweiTcpClient::LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[],IPAddress ip,IPAddress dns,IPAddress gw,IPAddress subnet):
-	server(EthernetServer(80)),
-	tcpServer("tcp.lewei50.com")
-{
-	_userKey = (char*)malloc( strlen(userKey)+1 );
-	strcpy( _userKey,userKey );
-	
-	_gatewayNo = (char*)malloc( strlen(gatewayNo)+1 );
-	strcpy( _gatewayNo,gatewayNo );
-	
-	setupDefaultValue();
-	Ethernet.begin(mac,ip,dns,gw,subnet);
-	Serial.println(Ethernet.localIP());
-	delay(1000);
 	String clientStr="";
 	keepOnline();
 }
 
-void LeweiTcpClient::setupDefaultValue()
+
+void LeweiTcpClientMod::setupDefaultValue()
 {
 	//checkFreeMem();
 	head = NULL;
 	
-	byte _mac[] = {0x74, 0x69, 0x69, 0x2D, 0x30, 0x31};
 	_postInterval = 30000;//server setting is 60000
 	_starttime = millis();
 	
@@ -147,7 +110,7 @@ void LeweiTcpClient::setupDefaultValue()
 
 }
 
-void LeweiTcpClient::easySetupMode(boolean bEasyMode)
+void LeweiTcpClientMod::easySetupMode(boolean bEasyMode)
 {
 	_bEasyMode = bEasyMode;
 	if(_bEasyMode)
@@ -163,7 +126,7 @@ void LeweiTcpClient::easySetupMode(boolean bEasyMode)
 	}
 }
 
-void LeweiTcpClient::writeRom(String value)
+void LeweiTcpClientMod::writeRom(String value)
 {
   for(int i =0;i<52;i++)
   {
@@ -172,12 +135,12 @@ void LeweiTcpClient::writeRom(String value)
   softwareReset();
 }
 
-void LeweiTcpClient::softwareReset()
+void LeweiTcpClientMod::softwareReset()
 {
    asm volatile ("  jmp 0");
 }
 
-void LeweiTcpClient::readRom()
+void LeweiTcpClientMod::readRom()
 {
   byte value;
   String tmp = "";
@@ -218,7 +181,7 @@ void LeweiTcpClient::readRom()
 }
 
 
-void LeweiTcpClient::listenServer()
+void LeweiTcpClientMod::listenServer()
 {
   EthernetClient clientWeb = server.available();
   if (clientWeb) {
@@ -276,7 +239,7 @@ void LeweiTcpClient::listenServer()
   
 }
 
-char* LeweiTcpClient::strToChar(String str)
+char* LeweiTcpClientMod::strToChar(String str)
 {
 	char* c = (char*)malloc(str.length()+1);
 	if(!c)
@@ -290,13 +253,13 @@ char* LeweiTcpClient::strToChar(String str)
 	return c;
 }
 
-void LeweiTcpClient::sendOnlineCommand()
+void LeweiTcpClientMod::sendOnlineCommand()
 {
 		_clientRevCtrl.print(aliveString);
 		//Serial.println(aliveString);
 }
 
-void LeweiTcpClient::keepOnline()
+void LeweiTcpClientMod::keepOnline()
 {
 	getResponse();
 	
@@ -318,7 +281,7 @@ void LeweiTcpClient::keepOnline()
 		}
 }
 
-void LeweiTcpClient::getResponse()
+void LeweiTcpClientMod::getResponse()
 {
 	if (_clientRevCtrl.available())
 	{
@@ -431,7 +394,7 @@ void LeweiTcpClient::getResponse()
 	}
 }
 
-char* LeweiTcpClient::getParaValue(String &orig,String paraName)
+char* LeweiTcpClientMod::getParaValue(String &orig,String paraName)
 {
 		//Serial.print("P:");
 		//Serial.println(paraName);
@@ -444,7 +407,7 @@ char* LeweiTcpClient::getParaValue(String &orig,String paraName)
 		return c;
 }
 
-String LeweiTcpClient::getParaValueStr(String &orig,String paraName)
+String LeweiTcpClientMod::getParaValueStr(String &orig,String paraName)
 {
 		int functionNameStartPos = orig.indexOf("\""+paraName+"\":\"");
 		if(functionNameStartPos<0)return NULL;
@@ -454,7 +417,7 @@ String LeweiTcpClient::getParaValueStr(String &orig,String paraName)
 		return functionName;
 }
 /*
-void LeweiTcpClient::directResponse(String respStr)
+void LeweiTcpClientMod::directResponse(String respStr)
 {
 	if(_clientRevCtrl.connected())
 	{
@@ -468,7 +431,7 @@ void LeweiTcpClient::directResponse(String respStr)
 	}
 }
 */
-void LeweiTcpClient::connentTcpServer()
+void LeweiTcpClientMod::connentTcpServer()
 {
 	Serial.print("Connect");
 	
@@ -487,18 +450,18 @@ void LeweiTcpClient::connentTcpServer()
 	}
 }
 
-void LeweiTcpClient::setRevCtrlMsg(char* execResult,char* msg)
+void LeweiTcpClientMod::setRevCtrlMsg(char* execResult,char* msg)
 {
 	_revCtrlResult = execResult;
 	_revCtrlMsg = msg;
 }
 
-void LeweiTcpClient::setRevCtrlData(char* data)
+void LeweiTcpClientMod::setRevCtrlData(char* data)
 {
 	_revCtrlData = data;
 }
 
-void LeweiTcpClient::appendSensorValue(String sensorName,String sensorValue)
+void LeweiTcpClientMod::appendSensorValue(String sensorName,String sensorValue)
 {
 	_sensorValueStr +="{\"Name\":\"";
 	_sensorValueStr +=sensorName;
@@ -506,30 +469,30 @@ void LeweiTcpClient::appendSensorValue(String sensorName,String sensorValue)
 	_sensorValueStr +=sensorValue;
 	_sensorValueStr +="\"},";
 }
-void LeweiTcpClient::appendSensorValue(String sensorName,int sensorValue)
+void LeweiTcpClientMod::appendSensorValue(String sensorName,int sensorValue)
 {
 	appendSensorValue(sensorName,String(sensorValue));
 }
-void LeweiTcpClient::appendSensorValue(String sensorName,float sensorValue)
+void LeweiTcpClientMod::appendSensorValue(String sensorName,float sensorValue)
 {
 	char s[10];
 	int val_len = snprintf(s, 10,"%d.%02u", (int)sensorValue, (int)(abs(sensorValue)*100+0.5) % 100);
 	appendSensorValue(sensorName,(String)s);
 }
 
-void LeweiTcpClient::appendSensorValue(String sensorName,double sensorValue)
+void LeweiTcpClientMod::appendSensorValue(String sensorName,double sensorValue)
 {
 	char s[10];
 	int val_len = snprintf(s, 10,"%d.%02u", (int)sensorValue, (int)(abs(sensorValue)*100+0.5) % 100);
 	appendSensorValue(sensorName,(String)s);
 }
-void LeweiTcpClient::appendSensorValue(String sensorName,long sensorValue)
+void LeweiTcpClientMod::appendSensorValue(String sensorName,long sensorValue)
 {
 	appendSensorValue(sensorName,(String)sensorValue);
 }
 
 
-void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
+void LeweiTcpClientMod::sendSensorValue(String sensorName,String sensorValue)
 {
 	if (_clientRevCtrl.connected())
 	{
@@ -605,7 +568,7 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 	
 }
 
-void LeweiTcpClient::checkFreeMem()
+void LeweiTcpClientMod::checkFreeMem()
 {
 		for(int i = 512;i>0;i--)
 		{
@@ -621,13 +584,13 @@ void LeweiTcpClient::checkFreeMem()
 		}
 }
 
-void LeweiTcpClient::sendSensorValue(String sensorName,int sensorValue)
+void LeweiTcpClientMod::sendSensorValue(String sensorName,int sensorValue)
 {
 	sendSensorValue(sensorName,String(sensorValue));
 }
 
 
-void LeweiTcpClient::sendSensorValue(String sensorName,float sensorValue)
+void LeweiTcpClientMod::sendSensorValue(String sensorName,float sensorValue)
 {
 	char s[10];
 	int val_len = snprintf(s, 10,"%d.%02u", (int)sensorValue, (int)(abs(sensorValue)*100+0.5) % 100);
@@ -635,52 +598,52 @@ void LeweiTcpClient::sendSensorValue(String sensorName,float sensorValue)
 	
 }
 
-void LeweiTcpClient::sendSensorValue(String sensorName,double sensorValue)
+void LeweiTcpClientMod::sendSensorValue(String sensorName,double sensorValue)
 {
 	char s[10];
 	int val_len = snprintf(s, 10,"%d.%02u", (int)sensorValue, (int)(abs(sensorValue)*100+0.5) % 100);
 	sendSensorValue(sensorName,(String)s);
 	
 }
-void LeweiTcpClient::sendSensorValue(String sensorName,long sensorValue)
+void LeweiTcpClientMod::sendSensorValue(String sensorName,long sensorValue)
 {
 	sendSensorValue(sensorName,(String)sensorValue);
 	
 }
 
 
-void LeweiTcpClient::execute(void (*callfuct)())
+void LeweiTcpClientMod::execute(void (*callfuct)())
 {
 	//Serial.println("exec no para");
     callfuct();
 }
-void LeweiTcpClient::execute(void (*callfuct)(char*),char* p1)
+void LeweiTcpClientMod::execute(void (*callfuct)(char*),char* p1)
 {
     callfuct(p1);
 }
-void LeweiTcpClient::execute(void (*callfuct)(char*,char*),char* p1,char* p2)
+void LeweiTcpClientMod::execute(void (*callfuct)(char*,char*),char* p1,char* p2)
 {
     callfuct(p1,p2);
 }
 
 /*
-void LeweiTcpClient::execute(void (*callfuct)(char*,char*,char*),char* p1,char* p2,char* p3)
+void LeweiTcpClientMod::execute(void (*callfuct)(char*,char*,char*),char* p1,char* p2,char* p3)
 {
     callfuct(p1,p2,p3);
 }
 
-void LeweiTcpClient::execute(void (*callfuct)(char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4)
+void LeweiTcpClientMod::execute(void (*callfuct)(char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4)
 {
     callfuct(p1,p2,p3,p4);
 }
-void LeweiTcpClient::execute(void (*callfuct)(char*,char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4,char* p5)
+void LeweiTcpClientMod::execute(void (*callfuct)(char*,char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4,char* p5)
 {
     callfuct(p1,p2,p3,p4,p5);
 }
 */
 
 
-void LeweiTcpClient::addUserFunction(UserFunction &uFunction)
+void LeweiTcpClientMod::addUserFunction(UserFunction &uFunction)
 {
 	UserFunctionNode *n1,*n2;
 	n2 = (UserFunctionNode*) new(UserFunctionNode);
