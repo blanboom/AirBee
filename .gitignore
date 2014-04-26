@@ -15,6 +15,7 @@ AirBee_Network_PCB/Project Logs for AirBee
 AirBee_Network_PCB/AirBee.PcbDocPreview
 
 
+
 # OS generated files #
 ######################
 .DS_Store
@@ -24,3 +25,5 @@ AirBee_Network_PCB/AirBee.PcbDocPreview
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+/etc
