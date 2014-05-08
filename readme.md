@@ -6,8 +6,8 @@
 
 ## 文件说明
 
-** AirBee_Sensor_PCB **: 各个节点的 PCB
+**AirBee_Sensor_PCB**: 各个节点的 PCB
 
-** AirBee_Network_PCB **: 网关的 PCB
+**AirBee_Network_PCB**: 网关的 PCB
 
-** AirBee_Network_Arduino **: 网关的 Arduino 程序
+**AirBee_Network_Arduino **:网关的 Arduino 程序
