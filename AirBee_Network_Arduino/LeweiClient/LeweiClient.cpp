@@ -26,7 +26,6 @@ static void _print(char *fmt, ... )
 
 //#define DEBUG_PRINTF(...)
 
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 char server[] = "open.lewei50.com";
 
 LeWeiClient::LeWeiClient(const char * user_key, const char * gateway)

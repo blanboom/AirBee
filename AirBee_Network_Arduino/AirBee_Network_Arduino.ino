@@ -82,6 +82,7 @@ void loop()
   unsigned char temperature = 0; /* 温度  */
   unsigned char humidity = 0;    /* 湿度  */
   int pm = 0;                    /* PM2.5 */
+  int mq = 0;                    /* MQ135 */
 
 
   if(Serial.available() > 0)
