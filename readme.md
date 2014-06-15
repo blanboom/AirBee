@@ -10,4 +10,6 @@
 
 **AirBee_Network_PCB**: 网关的 PCB
 
-**AirBee_Network_Arduino**:网关的 Arduino 程序
+**AirBee_Network_Arduino**: 网关的 Arduino 程序
+
+ZigBee 的发送与接收采用 CC2530 模块，程序非本人完成，暂不方便公开。
